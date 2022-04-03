@@ -19,7 +19,7 @@ provider "kubernetes" {
 
 terraform {
   backend "s3" {
-    bucket = "clc-production-terraform-state"
+    bucket = "litmuschaos-production-terraform-state"
     key    = "state/terraform.tfstate"
     region = "us-east-1"
   }
