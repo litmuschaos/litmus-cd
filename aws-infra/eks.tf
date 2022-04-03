@@ -21,7 +21,6 @@ module "eks" {
     name          = "eks-production-worker-group"
     instance_type = var.node_instance_type
     key_name      = var.nodes_key_pair_name
-    //disk_size          = var.bot_disk_size
     asg_desired_capacity = var.desired_nodes
     asg_max_size         = var.max_nodes
     asg_min_size         = var.min_nodes
@@ -42,7 +41,6 @@ module "eks" {
     },
   ]
   workers_additional_policies = ["arn:aws:iam::aws:policy/AutoScalingFullAccess"]
-  map_users                   = var.map_users
 }
 
 locals {

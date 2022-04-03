@@ -59,12 +59,3 @@ variable "node_avg_cpu_utilization" {
   type    = number
   default = 60
 }
-
-variable "map_users" {
-  description = "Additional IAM users to add to the aws-auth configmap."
-  type = list(object({
-    userarn  = string
-    username = string
-    groups   = list(string)
-  }))
-}
