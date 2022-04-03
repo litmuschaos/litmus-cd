@@ -2,7 +2,7 @@ name: deploy-pipeline
 on:
   push:
     branches:
-      - "production"
+      - "master"
 jobs:
   filters:
     runs-on: ubuntu-latest
