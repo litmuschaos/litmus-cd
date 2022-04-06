@@ -1,0 +1,97 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kube-prometheus-stack-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    chart: kube-prometheus-stack
+    repoURL: https://prometheus-community.github.io/helm-charts
+    targetRevision: 32.2.0
+    helm:
+      releaseName: kube-prometheus-stack
+      parameters:
+        - name: skipCrds
+          value: "false"
+        - name: installCRDs
+          value: "true"
+      values: |
+        prometheus:
+          ingress:
+            enabled: true
+            path: /(.*)
+            pathType: ImplementationSpecific
+            annotations:
+              cert-manager.io/cluster-issuer: letsencrypt-internal
+              nginx.ingress.kubernetes.io/rewrite-target: /$1
+              kubernetes.io/ingress.class: internal-nginx
+            hosts:
+              - prometheus.cloud.chaosnative.com
+            tls:
+            - secretName: prometheus-tls
+              hosts:
+              - prometheus.cloud.chaosnative.com
+          prometheusSpec:
+            additionalScrapeConfigs:
+             - job_name: 'clc-custom-metrics'
+               metrics_path: /metrics
+               static_configs:
+                 - targets: ["prometheus-pushgateway.monitoring.svc.cluster.local:9091"]
+            storageSpec:
+              volumeClaimTemplate:
+                spec:
+                  resources:
+                    requests:
+                      storage: 20Gi     # Size of volume used by prometheus'. Can be modified depending on  required retention
+        grafana:
+          ingress:
+            enabled: true
+            path: /(.*)
+            pathType: ImplementationSpecific
+            annotations:
+              cert-manager.io/cluster-issuer: letsencrypt-internal
+              nginx.ingress.kubernetes.io/rewrite-target: /$1
+              kubernetes.io/ingress.class: internal-nginx
+            hosts:
+              - grafana.cloud.chaosnative.com
+            tls:
+            - secretName: grafana-tls
+              hosts:
+              - grafana.cloud.chaosnative.com
+          persistence:
+            type: statefulset          # To deploy Grafana as a StatefulSet
+            enabled: true
+            size: 5Gi                  # Size of volume used by Grafana for storing dashboards created from the Grafana UI
+          datasources:                 # Omit this if no additional datasources are required
+            datasources.yaml:
+              apiVersion: 1
+              datasources:
+              - name: Loki             # Adding Loki as datasource
+                type: loki
+                uid: Loki
+                access: proxy
+                editable: false
+                url: http://loki-stack.monitoring:3100     # DNS of loki-gateway
+              - name: Prometheus             # Adding Prometheus as datasource
+                type: prometheus
+                uid: Prometheus
+                access: proxy
+                editable: false
+                url: http://kube-prometheus-stack-prometheus.monitoring:9090     # DNS of Prometheus-gateway
+          sidecar:                              
+            dashboards:
+              enabled: true                        # To enable dashboards as configMaps automatically picked up by Grafana
+              label: grafana_dashboard             # Label the configMaps should have in order to be added
+              folder: /tmp/dashboards
+              searchNamespace: ALL                 # To look for dashboard configMaps in all namespaces
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true

@@ -1,0 +1,21 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: v1-litmus-docs-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/litmuschaos/litmus-cd'
+    path: k8s-infra/v1-litmus-docs
+    targetRevision: master
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: v1-litmus-docs
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true

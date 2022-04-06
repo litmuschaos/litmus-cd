@@ -1,0 +1,5 @@
+resources:
+  - base/v1-litmusdocs-deploy.yaml
+  - base/v1-litmusdocs-svc.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization

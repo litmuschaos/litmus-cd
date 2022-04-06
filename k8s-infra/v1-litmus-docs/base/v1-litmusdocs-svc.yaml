@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: v1-litmusdoc
+  name: v1-litmusdoc-service
+  namespace: v1-litmus-doc
+spec:
+  ports:
+  - name: litmusdoc
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: v1-litmusdoc

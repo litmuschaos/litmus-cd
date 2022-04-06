@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: misc-manifests-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/chaosnative/clc-infra'
+    path: k8s-infra/misc-manifests
+    targetRevision: production
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true

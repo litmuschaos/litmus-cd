@@ -1,0 +1,22 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: v1-litmusdoc
+  namespace: v1-litmus-doc
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: v1-litmusdoc
+  template:
+    metadata:
+      labels:
+        app: v1-litmusdoc
+    spec:
+      containers:
+      - name: litmusdoc
+        image: litmuschaos/v1-litmus-docs:master-2405b0e
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80

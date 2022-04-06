@@ -1,0 +1,36 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: loki-stack
+  namespace: argocd
+spec:
+  project: default
+  source:
+    chart: loki-stack
+    repoURL: https://grafana.github.io/helm-charts
+    targetRevision: 2.6.1
+    helm:
+      releaseName: loki-stack
+      parameters:
+        - name: grafana.enabled
+          value: "false"
+        - name: prometheus.enabled
+          value: "false"
+        - name: prometheus.alertmanager.persistentVolume.enabled
+          value: "false"
+        - name: prometheus.server.persistentVolume.enabled
+          value: "false"
+        - name: loki.persistence.enabled
+          value: "true"
+        - name: loki.persistence.size
+          value: "5Gi"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true
