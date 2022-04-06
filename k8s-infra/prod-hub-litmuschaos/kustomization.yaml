@@ -1,0 +1,7 @@
+resources:
+  - base/hub-client-litmuschaos-svc.yaml
+  - base/hub-client-litmuschaos.yaml
+  - base/hub-server-litmuschaos.yaml
+  - base/hub-server-litmuschaos-svc.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization

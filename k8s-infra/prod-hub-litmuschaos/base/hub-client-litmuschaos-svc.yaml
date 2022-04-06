@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: prod-chart-litmuschaos-client
+  name: prod-chart-litmuschaos-client-service
+  namespace: prod-hub-litmuschaos
+spec:
+  ports:
+  - name: prod-chart-litmuschaos-client
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: prod-chart-litmuschaos-client

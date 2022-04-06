@@ -1,0 +1,26 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: prod-chart-litmuschaos-client
+  name: prod-chart-litmuschaos-client
+  namespace: prod-hub-litmuschaos
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: prod-chart-litmuschaos-client
+  template:
+    metadata:
+      labels:
+        app: prod-chart-litmuschaos-client
+    spec:
+      containers:
+      - name: prod-chart-litmuschaos-client
+        image: litmuschaos/charthub-litmuschaos-io:2ec277
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          protocol: TCP
+      restartPolicy: Always
