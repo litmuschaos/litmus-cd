@@ -1,0 +1,26 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: staging-chart-litmuschaos-client
+  name: staging-chart-litmuschaos-client
+  namespace: staging-hub-litmuschaos
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: staging-chart-litmuschaos-client
+  template:
+    metadata:
+      labels:
+        app: staging-chart-litmuschaos-client
+    spec:
+      containers:
+      - name: staging-chart-litmuschaos-client
+        image: litmuschaos/charthub-litmuschaos-io-stag:staging-f9360e
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          protocol: TCP
+      restartPolicy: Always

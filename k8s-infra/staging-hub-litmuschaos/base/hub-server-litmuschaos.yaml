@@ -1,0 +1,36 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: staging-chart-litmuschaos-server
+  name: staging-chart-litmuschaos-server
+  namespace: staging-hub-litmuschaos
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: staging-chart-litmuschaos-server
+  template:
+    metadata:
+      labels:
+        app: staging-chart-litmuschaos-server
+    spec:
+      containers:
+      - name: staging-chart-litmuschaos-server
+        image: litmuschaos/charthub-litmuschaos-io-stag-server:staging-f9360e
+        imagePullPolicy: Always
+        env:
+        - name: CHAOS_CHART_BRANCH
+          value: "staging"
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/analytics
+      restartPolicy: Always
+      volumes:
+      - name: config-volume
+        configMap:
+          name: analytic-auth

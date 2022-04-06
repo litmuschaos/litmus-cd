@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: staging-chart-litmuschaos-client
+  name: staging-chart-litmuschaos-client-service
+  namespace: staging-hub-litmuschaos
+spec:
+  ports:
+  - name: staging-chart-litmuschaos-client
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: staging-chart-litmuschaos-client
