@@ -4,7 +4,7 @@ metadata:
   labels:
     app: v1-litmusdoc
   name: v1-litmusdoc-service
-  namespace: v1-litmus-doc
+  namespace: v1-litmus-docs
 spec:
   ports:
   - name: litmusdoc
