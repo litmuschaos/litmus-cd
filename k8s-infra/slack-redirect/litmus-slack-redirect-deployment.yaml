@@ -5,7 +5,7 @@ metadata:
   labels:
     app: litmus-slack-redirect
   name: litmus-slack-redirect
-  namespace: default
+  namespace: slack-redirect
 spec:
   replicas: 1
   selector:
