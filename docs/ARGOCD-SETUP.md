@@ -207,4 +207,37 @@ spec:
     secretName: staging-hub-litmus-tls
 ```
 
-  
+  * Slack Redirect
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    kubernetes.io/tls-acme: "true"
+    fluxcd.io/automated: "true"
+    nginx.org/server-snippets: "gzip on;"
+    nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  name: slack-redirect-ingress
+  namespace: slack-redirect
+spec:
+  rules:
+  - host: slack.litmuschaos.io
+    http:
+      paths:
+      - path: /(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: litmus-slack-redirect
+            port:
+              number: 80
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - slack.litmuschaos.io
+    secretName: slack-redirect-tls
+```
