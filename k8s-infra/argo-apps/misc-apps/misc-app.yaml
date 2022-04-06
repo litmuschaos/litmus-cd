@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/chaosnative/clc-infra'
+    repoURL: 'https://github.com/litmuschaos/litmus-cd'
     path: k8s-infra/misc-manifests
     targetRevision: production
   destination:

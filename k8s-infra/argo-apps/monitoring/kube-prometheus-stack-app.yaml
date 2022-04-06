@@ -34,11 +34,6 @@ spec:
               hosts:
               - prometheus.cloud.chaosnative.com
           prometheusSpec:
-            additionalScrapeConfigs:
-             - job_name: 'clc-custom-metrics'
-               metrics_path: /metrics
-               static_configs:
-                 - targets: ["prometheus-pushgateway.monitoring.svc.cluster.local:9091"]
             storageSpec:
               volumeClaimTemplate:
                 spec:
