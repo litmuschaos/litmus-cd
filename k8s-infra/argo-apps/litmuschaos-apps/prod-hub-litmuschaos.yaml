@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: v1-litmus-docs-app
+  name: prod-hub-litmuschaos-app
   namespace: argocd
 spec:
   project: default
