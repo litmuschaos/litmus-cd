@@ -38,6 +38,6 @@ spec:
           mountPath: /etc/analytics
       restartPolicy: Always
       volumes:
-      - name: config-volume
-        configMap:
-          name: analytic-auth
+        - name: config-volume
+          configMap:
+            name: analytic-auth

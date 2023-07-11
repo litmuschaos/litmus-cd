@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: staging-chart-litmuschaos-server
-        image: litmuschaos/charthub-litmuschaos-io-stag-server:staging-a59ab6
+        image: litmuschaos/charthub-litmuschaos-io-stag-server:staging-0c1fd4
         imagePullPolicy: Always
         env:
         - name: CHAOS_CHART_BRANCH
