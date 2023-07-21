@@ -19,6 +19,13 @@ spec:
       containers:
       - name: prod-chart-litmuschaos-client
         image: litmuschaos/charthub-litmuschaos-io:8cc3c6
+        resources:
+          limits:
+            memory: 250Mi
+            cpu: 200m
+          requests:
+            memory: 100Mi
+            cpu: 100m
         imagePullPolicy: Always
         ports:
         - containerPort: 80
