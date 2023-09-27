@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: prod-chart-litmuschaos-server
-        image: litmuschaos/charthub-litmuschaos-io-server:640426
+        image: litmuschaos/charthub-litmuschaos-io-server:3d6202
         resources:
           limits:
             memory: 250Mi
