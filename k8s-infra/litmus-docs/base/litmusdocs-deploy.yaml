@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: litmusdoc
-        image: litmuschaos/litmus-docs:master-0607d86
+        image: litmuschaos/litmus-docs:master-831d20e
         imagePullPolicy: Always
         ports:
         - containerPort: 80
