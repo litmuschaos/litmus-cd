@@ -1,0 +1,34 @@
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
+# Terraform variable files may contain credentials and account-specific values
+*.tfvars
+*.tfvars.json
+!example.tfvars
+
+# Kubernetes / cluster credentials
+kubeconfig
+kubeconfig_*
+*.kubeconfig
+
+# Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
